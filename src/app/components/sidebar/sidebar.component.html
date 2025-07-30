@@ -1,0 +1,15 @@
+<nav class="sidebar">
+  <ul class="nav flex-column sidebar-links">
+    <li class="nav-item" *ngFor="let item of menuItems">
+      <a
+        class="nav-link"
+        [routerLink]="item.path"
+        [ngClass]="{ 'active': activeRoute === item.path }"
+        (click)="setActive(item.path)"
+      >
+        <i class="nav-icon" [ngClass]="item.icon"></i>
+        <p>{{ item.label }}</p>
+      </a>
+    </li>
+  </ul>
+</nav>

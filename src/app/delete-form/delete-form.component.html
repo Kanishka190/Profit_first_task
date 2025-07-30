@@ -1,0 +1,11 @@
+
+<h2>Delete Item</h2>
+
+<div *ngIf="successMessage" class="success">{{ successMessage }}</div>
+<div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+<form (ngSubmit)="deleteItem()">
+  <label>Enter Item ID to Delete:</label>
+  <input type="number" [(ngModel)]="itemId" name="itemId" required />
+  <button type="submit">Delete</button>
+</form>

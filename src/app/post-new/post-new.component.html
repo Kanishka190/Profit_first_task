@@ -1,0 +1,46 @@
+<div class="content-wrapper">
+  <h2>Add Item</h2>
+
+  <div *ngIf="successMessage" class="success">{{ successMessage }}</div>
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+  <form (ngSubmit)="OnSubmit()">
+    <label>Item ID:</label>
+    <input type="number" [(ngModel)]="item.itemId" name="itemId" required />
+
+    <label>Product Name:</label>
+    <input type="text" [(ngModel)]="item.productName" name="productName" required />
+
+    <label>SKU:</label>
+    <input type="text" [(ngModel)]="item.sku" name="sku" required />
+
+    <label>HSN/SAC:</label>
+    <input type="text" [(ngModel)]="item.hsn_SAC" name="hsn_SAC" required />
+
+    <label>Category ID:</label>
+    <input type="text" [(ngModel)]="item.categoryId" name="categoryId" required />
+
+    <label>Unit ID:</label>
+    <input type="text" [(ngModel)]="item.unitId" name="unitId" required />
+
+    <label>Min Quantity:</label>
+    <input type="number" [(ngModel)]="item.minQty" name="minQty" required />
+
+    <label>Expiry Alert Days:</label>
+    <input type="number" [(ngModel)]="item.expiryAlertDays" name="expiryAlertDays" required />
+
+    <label>Description:</label>
+    <textarea [(ngModel)]="item.description" name="description" required></textarea>
+
+    <label>Selling Price:</label>
+    <input type="number" [(ngModel)]="item.sellingPrice" name="sellingPrice" required />
+
+    <label>SGST:</label>
+    <input type="number" [(ngModel)]="item.sgst" name="sgst" required />
+
+    <label>CGST:</label>
+    <input type="number" [(ngModel)]="item.cgst" name="cgst" required />
+
+    <button type="submit">Add Item</button>
+  </form>
+</div>

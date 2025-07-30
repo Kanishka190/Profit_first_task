@@ -1,0 +1,132 @@
+<div class="content-wrapper">
+  <!-- Search + New/Edit -->
+  <div class="action-bar">
+    <div class="search-box">
+      <input type="text" placeholder="Search here..." [(ngModel)]="searchTerm" (input)="onSearch()" />
+      <i class="bi bi-search search-icon"></i>
+    </div>
+
+    <div class="action-buttons">
+      <button class="btn-new" (click)="openEditModal('')">+ NEW</button>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Item ID</th>
+          <th>Product Name</th>
+          <th>SKU</th>
+          <th>HSN/SAC</th>
+          <th>Category ID</th>
+          <th>Unit ID</th>
+          <th>Min Qty</th>
+          <th>Expiry Alert</th>
+          <th>Description</th>
+          <th>Selling Price</th>
+          <th>SGST</th>
+          <th>CGST</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of filteredSpa">
+          <td>{{ item.itemId }}</td>
+          <td>{{ item.productName }}</td>
+          <td>{{ item.sku }}</td>
+          <td>{{ item.hsN_SAC }}</td>
+          <td>{{ item.category }}</td>
+          <td>{{ item.unit }}</td>
+          <td>{{ item.minQty }}</td>
+          <td>{{ item.expiryAlertDays }}</td>
+          <td>{{ item.description }}</td>
+          <td>{{ item.sellingPrice }}</td>
+          <td>{{ item.sgst }}</td>
+          <td>{{ item.cgst }}</td>
+          <td>
+            <button class="btn btn-view" (click)="openViewModal(item)">
+              <i class="bi bi-eye"></i>
+            </button>
+            <button class="btn btn-edit" (click)="openEditModal(item.itemId)">
+              <i class="bi bi-pencil-square"></i>
+            </button>
+            <button class="btn btn-delete" (click)="onDelete(item.itemId)">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- View Modal -->
+  <div class="modal-overlay" *ngIf="viewItem">
+    <div class="modal">
+      <h3>Product Details</h3>
+      <button class="close-btn" (click)="closeViewModal()">×</button>
+      <div class="modal-content">
+        <p><strong>Item ID:</strong> {{ viewItem.itemId }}</p>
+        <p><strong>Product Name:</strong> {{ viewItem.productName }}</p>
+        <p><strong>SKU:</strong> {{ viewItem.sku }}</p>
+        <p><strong>HSN/SAC:</strong> {{ viewItem.hsn_SAC }}</p>
+        <p><strong>Category ID:</strong> {{ viewItem.categoryId }}</p>
+        <p><strong>Unit ID:</strong> {{ viewItem.unitId }}</p>
+        <p><strong>Min Qty:</strong> {{ viewItem.minQty }}</p>
+        <p><strong>Expiry Alert Days:</strong> {{ viewItem.expiryAlertDays }}</p>
+        <p><strong>Description:</strong> {{ viewItem.description }}</p>
+        <p><strong>Selling Price:</strong> {{ viewItem.sellingPrice }}</p>
+        <p><strong>SGST:</strong> {{ viewItem.sgst }}</p>
+        <p><strong>CGST:</strong> {{ viewItem.cgst }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Modal -->
+  <div class="modal-overlay" *ngIf="showEditModal">
+    <div class="modal large">
+      <h2>{{ isEditMode ? 'Edit' : 'Add New' }} Product</h2>
+      <button class="close-btn" (click)="closeEditModal()">×</button>
+
+      <div *ngIf="id">
+        <label>Enter Item ID:</label>
+        <input [(ngModel)]="id" placeholder="eg: 0" />
+        <button (click)="getById()">x</button>
+      </div>
+
+      <div *ngIf="result" class="form-container">
+        <label>Product Name:</label>
+        <input [(ngModel)]="result.productName" />
+        <label>SKU:</label>
+        <input [(ngModel)]="result.sku" />
+        <label>HSN/SAC:</label>
+        <input [(ngModel)]="result.hsn_SAC" />
+        <label>Category ID:</label>
+        <input [(ngModel)]="result.categoryId" />
+        <label>Unit ID:</label>
+        <input [(ngModel)]="result.unitId" />
+        <label>Min Qty:</label>
+        <input [(ngModel)]="result.minQty" type="number" />
+        <label>Expiry Alert Days:</label>
+        <input [(ngModel)]="result.expiryAlertDays" type="number" />
+        <label>Description:</label>
+        <input [(ngModel)]="result.description" />
+        <label>Selling Price:</label>
+        <input [(ngModel)]="result.sellingPrice" type="number" />
+        <label>SGST:</label>
+        <input [(ngModel)]="result.sgst" type="number" />
+        <label>CGST:</label>
+        <input [(ngModel)]="result.cgst" type="number" />
+        <button (click)="updateProduct()">
+          {{ isEditMode ? 'Update' : 'Add' }}
+        </button>
+
+      </div>
+
+      <p *ngIf="loading">Loading...</p>
+      <p *ngIf="successMessage" class="success-message">{{ successMessage }}</p>
+      <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+    </div>
+  </div>
+</div>
