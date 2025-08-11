@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -11,6 +11,15 @@ import { CommonModule } from '@angular/common';
 })
 export class SidebarComponent {
   activeRoute: string = '';
+    @Input() collapsed: boolean = false;
+    
+sidebarCollapsed = false;
+
+toggleSidebar() {
+  this.sidebarCollapsed = !this.sidebarCollapsed;
+  this.collapsed = !this.collapsed;
+}
+
 
   constructor(private router: Router) {
   }

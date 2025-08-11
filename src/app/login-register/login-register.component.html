@@ -1,0 +1,120 @@
+<div class="container" 
+     [class.right-panel-active]="!isLoginMode && !isResetPassword"
+     [class.reset-password-active]="isResetPassword">
+
+  <!-- Sign In Form -->
+  <div class="form-container sign-in-container" *ngIf="isLoginMode && !isResetPassword">
+    <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm)" novalidate>
+      <h1>Login</h1>
+
+      <input type="email" placeholder="Email" [(ngModel)]="loginData.email" name="email" required email #emailInput="ngModel" />
+      <div *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched )" class="error">
+        <small *ngIf="emailInput.errors?.['required']">Email is required.</small>
+        <small *ngIf="emailInput.errors?.['email']">Please enter a valid email.</small>
+      </div>
+
+      <input type="password" placeholder="Password" [(ngModel)]="loginData.password" name="password" required minlength="6" #passwordInput="ngModel" />
+      <div *ngIf="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)" class="error">
+        <small *ngIf="passwordInput.errors?.['required']">Password is required.</small>
+        <small *ngIf="passwordInput.errors?.['minlength']">Password must be at least 6 characters.</small>
+      </div>
+
+      <br />
+      <button type="submit" [disabled]="!loginForm.valid">Sign In</button>
+
+      <!-- Link to Reset Password -->
+      <a href="javascript:void(0)" (click)="openResetPassword()">Forgot your password?</a>
+
+      <br />
+      <span>Or Use Your Social Platform</span>
+      <div class="social-container">
+        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </form>
+  </div>
+
+  <!-- Sign Up Form -->
+  <div class="form-container sign-up-container" *ngIf="!isLoginMode && !isResetPassword">
+    <form #registerForm="ngForm" (ngSubmit)="onRegister(registerForm)" novalidate>
+      <h1>Create Account</h1>
+
+      <input type="text" placeholder="Name" [(ngModel)]="registerData.name" name="name" required minlength="3" #nameInput="ngModel" />
+      <div *ngIf="nameInput.invalid && (nameInput.dirty || nameInput.touched)" class="error">
+        <small *ngIf="nameInput.errors?.['required']">Name is required.</small>
+        <small *ngIf="nameInput.errors?.['minlength']">Name must be at least 3 characters.</small>
+      </div>
+
+      <input type="email" placeholder="Email" [(ngModel)]="registerData.email" name="regEmail" required email #regEmailInput="ngModel" />
+      <div *ngIf="regEmailInput.invalid && (regEmailInput.dirty || regEmailInput.touched)" class="error">
+        <small *ngIf="regEmailInput.errors?.['required']">Email is required.</small>
+        <small *ngIf="regEmailInput.errors?.['email']">Please enter a valid email.</small>
+      </div>
+
+      <input type="password" placeholder="Password" [(ngModel)]="registerData.password" name="regPassword" required minlength="6" #regPasswordInput="ngModel" />
+      <div *ngIf="regPasswordInput.invalid && (regPasswordInput.dirty || regPasswordInput.touched)" class="error">
+        <small *ngIf="regPasswordInput.errors?.['required']">Password is required.</small>
+        <small *ngIf="regPasswordInput.errors?.['minlength']">Password must be at least 6 characters.</small>
+      </div>
+
+      <input type="password" placeholder="Confirm Password" [(ngModel)]="registerData.confirmPassword" name="confirmPassword" required minlength="6" #confirmPasswordInput="ngModel" />
+      <div *ngIf="confirmPasswordInput.invalid && (confirmPasswordInput.dirty || confirmPasswordInput.touched)" class="error">
+        <small *ngIf="confirmPasswordInput.errors?.['required']">Confirm Password is required.</small>
+        <small *ngIf="confirmPasswordInput.errors?.['minlength']">Confirm Password must be at least 6 characters.</small>
+      </div>
+
+      <div *ngIf="registerData.password && registerData.confirmPassword && registerData.password !== registerData.confirmPassword" class="error">
+        <small>Passwords do not match.</small>
+      </div>
+
+      <button type="submit" [disabled]="!registerForm.valid || (registerData.password !== registerData.confirmPassword)">
+        Sign Up
+      </button>
+
+      <br />
+      <span>Or Use Your Social Platform</span>
+      <div class="social-container">
+        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </form>
+  </div>
+
+  <!-- Reset Password Form -->
+  <div class="form-container reset-password-container" *ngIf="isResetPassword">
+    <form #resetForm="ngForm" (ngSubmit)="onResetPassword(resetForm)" novalidate>
+      <h1>Reset Password</h1>
+
+      <input type="email" placeholder="Email" [(ngModel)]="resetData.email" name="resetEmail" required email #resetEmailInput="ngModel" />
+      <div *ngIf="resetEmailInput.invalid && (resetEmailInput.dirty || resetEmailInput.touched)" class="error">
+        <small *ngIf="resetEmailInput.errors?.['required']">Email is required.</small>
+        <small *ngIf="resetEmailInput.errors?.['email']">Please enter a valid email.</small>
+      </div>
+
+      <button type="submit" [disabled]="!resetForm.valid">Send Reset Link</button>
+
+      <br />
+      <a href="javascript:void(0)" (click)="backToLogin()">Back to Login -- ></a>
+    </form>
+  </div>
+
+  <img src="loginSs.png" alt="Center Illustration" class="center-image" />
+
+  <!-- Overlay Section -->
+  <div class="overlay-container" *ngIf="!isResetPassword">
+    <div class="overlay">
+      <div class="overlay-panel overlay-left" *ngIf="!isLoginMode">
+        <h1>Welcome Back!</h1>
+        <p>To keep connected with us please login with your personal info</p>
+        <button class="ghost" (click)="switchMode(true)">Sign In</button>
+      </div>
+      <div class="overlay-panel overlay-right" *ngIf="isLoginMode">
+        <h1>Hello, Friend!</h1>
+        <p>Enter your personal details and start your journey with us</p>
+        <button class="ghost" (click)="switchMode(false)">Sign Up</button>
+      </div>
+    </div>
+  </div>
+</div>

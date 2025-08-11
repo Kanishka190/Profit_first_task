@@ -1,4 +1,10 @@
-<nav class="sidebar">
+<nav class="sidebar" [class.collapsed]="collapsed">
+  <div class="sidebar-header">
+  <h1 class="name" *ngIf="!collapsed">kanishka!!!</h1>
+  <button class="hamburger" (click)="toggleSidebar()" aria-label="Toggle Sidebar">
+  <i class="fas fa-bars"></i>
+</button>
+</div>
   <ul class="nav flex-column sidebar-links">
     <li class="nav-item" *ngFor="let item of menuItems">
       <a
@@ -6,9 +12,10 @@
         [routerLink]="item.path"
         [ngClass]="{ 'active': activeRoute === item.path }"
         (click)="setActive(item.path)"
+        title="{{item.label}}" 
       >
         <i class="nav-icon" [ngClass]="item.icon"></i>
-        <p>{{ item.label }}</p>
+        <span class="label" *ngIf="!collapsed">{{ item.label }}</span>
       </a>
     </li>
   </ul>

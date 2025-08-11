@@ -2,11 +2,13 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HeaderComponent } from "../components/header/header.component";
+import { SidebarComponent } from "../components/sidebar/sidebar.component";
 
 @Component({
   selector: 'app-post-new',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, HeaderComponent, SidebarComponent],
   templateUrl: './post-new.component.html',
   styleUrls: ['./post-new.component.css']
 })
@@ -30,6 +32,13 @@ export class PostNewComponent {
   errorMessage = '';
 
   constructor(private http: HttpClient) {}
+
+  sidebarOpen = true;
+
+toggleSidebar() {
+  this.sidebarOpen = !this.sidebarOpen;
+}
+
 
   OnSubmit() {
     const url = `https://app-spa-madurai-dev-001-fweceqhadgbvfgha.centralus-01.azurewebsites.net/api/Item`;
